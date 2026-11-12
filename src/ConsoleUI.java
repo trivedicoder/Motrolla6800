@@ -35,3 +35,9 @@ public class ConsoleUI {
 
     
 }
+git init
+git add .
+git commit -m "Initial commit"
+git branch -M main
+https://github.com/trivedicoder/Motrolla6800
+git push -u origin main
