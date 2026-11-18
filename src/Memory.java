@@ -54,16 +54,7 @@ public class Memory {
         data[address] = value & 0xFF;
     }
 
-    // Connect a device to every address from start to end (inclusive)
-    public void mapDevice(int start, int end, IODevice device) {
-        for (int a = start; a <= end; a++) {
-            devices[a & 0xFFFF] = device;
-        }
-    }
-
     public boolean isRom(int address) {return isRom[address & 0xFFFF];}
-
-    public boolean isDevice(int address) {return devices[address & 0xFFFF] != null; }
 
     // Wipe RAM only (ROM keeps its contents)
     public void clearRam(){
@@ -71,14 +62,6 @@ public class Memory {
             if (!isRom(a)) {
                 data[a] = 0;
             }
-        }
-    }
-
-    // Wipe everything, including ROM (and turn ROM back into RAM)
-    public  void clearAll() {
-        for (int a = 0; a < SIZE; a++) {
-            data[a] = 0;
-            isRom[a] = false;
         }
     }
 

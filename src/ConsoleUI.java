@@ -23,6 +23,7 @@ public class ConsoleUI {
             String command = parts[0].toLowerCase();
 
             try {
+
                 if (command.equals("quit")) {
                     break;
 

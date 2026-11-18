@@ -76,6 +76,8 @@ public class CPU {
         if (!waiting) {
             return; // not waiting, nothing to do
         }
+
+        //
         setCCR(pull());
         B = pull();
         A = pull();
@@ -112,6 +114,8 @@ public class CPU {
     // Registers and flags as a string, for the UI
     public String getState() {
         String status = halted ? "  [HALTED: invalid opcode]" : waiting ? "  [WAI: waiting]" : "";
+
+        //
         return String.format("A=%02X B=%02X X=%04X SP=%04X PC=%04X  CCR=%02X (H=%d I=%d N=%d Z=%d V=%d C=%d)%s",
                 A, B, X, SP, PC, getCCR(),
                 H ? 1 : 0, I ? 1 : 0, N ? 1 : 0, Z ? 1 : 0, V ? 1 : 0, C ? 1 : 0, status);
@@ -138,6 +142,7 @@ public class CPU {
         return (memory.read(address) << 8) | memory.read((address + 1) & 0xFFFF);
     }
 
+    //
     private void write16(int address, int value) {
         memory.write(address, (value >> 8) & 0xFF);
         memory.write((address + 1) & 0xFFFF, value & 0xFF);

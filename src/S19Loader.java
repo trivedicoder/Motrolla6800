@@ -59,10 +59,14 @@ public class S19Loader {
         if (start + digits > line.length()) {
             throw new IOException("Line too short for hex: " + line);
         }
+
+        //
         int value = 0;
         for (int i = 0; i < digits; i++) {
             char c = line.charAt(start + i);
             int digit;
+
+            //
             if (c >= '0' && c <= '9') {
                 digit = c - '0';
             } else if (c >= 'A' && c <= 'F') {
