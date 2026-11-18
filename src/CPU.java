@@ -408,7 +408,7 @@ public class CPU {
             case 0x19: daa(); break;                            // DAA
             case 0x1B: A = add(A, B, false); break;             // ABA  A = A + B
 
-            // ===== Branches (relative) =====
+            // ===== Branches =====
             case 0x20: branch(true); break;                     // BRA  always
             case 0x22: branch(!(C || Z)); break;                // BHI  C|Z = 0
             case 0x23: branch(C || Z); break;                   // BLS  C|Z = 1
@@ -425,7 +425,7 @@ public class CPU {
             case 0x2E: branch(!Z && N == V); break;             // BGT  Z|(N^V) = 0
             case 0x2F: branch(Z || N != V); break;              // BLE  Z|(N^V) = 1
 
-            // ===== Stack and index register (inherent) =====
+            // ===== Stack and index register  =====
             case 0x30: X = (SP + 1) & 0xFFFF; break;            // TSX  SP + 1 -> X
             case 0x31: SP = (SP + 1) & 0xFFFF; break;           // INS
             case 0x32: A = pull(); break;                       // PULA
@@ -452,7 +452,7 @@ public class CPU {
                 PC = read16(VECTOR_SWI);
                 break;
 
-            // ===== Accumulator A (inherent) =====
+            // ===== Accumulator A =====
             case 0x40: A = neg(A); break;                       // NEGA
             case 0x43: A = com(A); break;                       // COMA
             case 0x44: A = lsr(A); break;                       // LSRA
@@ -465,7 +465,7 @@ public class CPU {
             case 0x4D: tst(A); break;                           // TSTA
             case 0x4F: A = clr(); break;                        // CLRA
 
-            // ===== Accumulator B (inherent) =====
+            // ===== Accumulator B =====
             case 0x50: B = neg(B); break;                       // NEGB
             case 0x53: B = com(B); break;                       // COMB
             case 0x54: B = lsr(B); break;                       // LSRB
@@ -478,7 +478,7 @@ public class CPU {
             case 0x5D: tst(B); break;                           // TSTB
             case 0x5F: B = clr(); break;                        // CLRB
 
-            // ===== Memory (indexed) =====
+            // ===== Memory  =====
             case 0x60: addr = indexed(); memory.write(addr, neg(mem(addr))); break;  // NEG idx
             case 0x63: addr = indexed(); memory.write(addr, com(mem(addr))); break;  // COM idx
             case 0x64: addr = indexed(); memory.write(addr, lsr(mem(addr))); break;  // LSR idx
