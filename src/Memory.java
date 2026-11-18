@@ -1,3 +1,5 @@
+// Memory: the 6800's 64 KB address space ($0000-$FFFF).
+// Each address is RAM, ROM (read-only for the CPU) or mapped to an IODevice.
 public class Memory {
 
     public static final int SIZE = 0x10000; // 64 KB
@@ -5,6 +7,8 @@ public class Memory {
     private boolean[] isRom;
     private IODevice[] devices;
 
+    // CPU writes go through write(): ROM is protected here.
+// The loader uses load() instead, so an S19 file can still fill ROM.
     public Memory() {
 
         data = new int[SIZE]; // 64KB of memory

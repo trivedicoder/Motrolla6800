@@ -8,9 +8,9 @@
 public class CPU {
 
     // Interrupt vector addresses (high byte first, then low byte)
-    public static final int VECTOR_IRQ = 0xFFF8;
+    //public static final int VECTOR_IRQ = 0xFFF8;
     public static final int VECTOR_SWI = 0xFFFA;
-    public static final int VECTOR_NMI = 0xFFFC;
+    //public static final int VECTOR_NMI = 0xFFFC;
     public static final int VECTOR_RESET = 0xFFFE;
 
     // Registers
@@ -70,14 +70,15 @@ public class CPU {
     }
 
     // Testing helper (not real hardware): carry on after a WAI without an
-    // interrupt. Pulls back what WAI pushed (same order as RTI) and keeps
-    // going at the instruction after the WAI.
+    // interrupt. Pulls back what WAI pushed (same order as RTI) and keeps going at the instruction after the WAI.
+
+    // NOT real hardware: on the 6800 only an interrupt wakes the CPU from WAI.
+    // This lets us continue past a WAI during testing, like an RTI would.
     public void resumeFromWait() {
         if (!waiting) {
             return; // not waiting, nothing to do
         }
 
-        //
         setCCR(pull());
         B = pull();
         A = pull();
