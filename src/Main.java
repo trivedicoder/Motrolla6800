@@ -2,6 +2,11 @@
 // Arya Trivedi and Dylan Zireva
 //
 // Builds the system (memory + CPU) and starts the text UI.
+// load ram samples/providedTest.s19
+// reset
+// pc 0000
+// run
+// mem 00B0 00B3
 
 public class Main {
     public static void main(String[] args) {

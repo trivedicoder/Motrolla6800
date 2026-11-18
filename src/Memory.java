@@ -1,6 +1,6 @@
 public class Memory {
 
-    public static final int SIZE = 0x1000; // 64 KB
+    public static final int SIZE = 0x10000; // 64 KB
     private int[] data;
     private boolean[] isRom;
     private IODevice[] devices;

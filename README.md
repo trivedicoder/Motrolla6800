@@ -1,2 +1,0 @@
-# Motrolla6800
-COSC 3P92
