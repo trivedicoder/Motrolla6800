@@ -1,40 +1,42 @@
 public class Memory {
 
-    public static final int SIZE = 0x10000; // 64 KB ($0000-$FFFF)
-
-    private int[] data;          // the actual bytes (0-255 each)
-    private boolean[] isRom;     // true = this address is read-only
-    private IODevice[] devices;  // non-null = this address belongs to a device
+    public static final int SIZE = 0x1000; // 64 KB
+    private int[] data;
+    private boolean[] isRom;
+    private IODevice[] devices;
 
     public Memory() {
-        data = new int[SIZE];
-        isRom = new boolean[SIZE];       // all false = all RAM to start
-        devices = new IODevice[SIZE];    // all null = no devices to start
+
+        data = new int[SIZE]; // 64KB of memory
+        isRom = new boolean[SIZE]; // all false = all RAM
+        devices = new IODevice[SIZE];
     }
 
     // ---------- What the CPU uses ----------
 
-    // CPU read: devices first, otherwise the stored byte
+    // CPU read: devices first, otherwise the stored
     public int read(int address) {
-        address &= 0xFFFF; // keep it in $0000-$FFFF
+        address &= 0xffff; // Keep it in $0000-$FFFF
         if (devices[address] != null) {
-            return devices[address].read(address) & 0xFF;
+            return devices[address].read(address) & 0xff;
         }
+
         return data[address];
     }
 
     // CPU write: devices first, ROM is ignored, otherwise store the byte
     public void write(int address, int value) {
-        address &= 0xFFFF;
+        address &= 0xffff;
         if (devices[address] != null) {
-            devices[address].write(address, value & 0xFF);
-            return; // the device handled it, don't touch RAM
+            devices[address].write(address, value);
         }
+
         if (isRom[address]) {
             return; // can't STORE into ROM
         }
-        data[address] = value & 0xFF;
+        data[address] = value & 0xff;
     }
+
 
     // ---------- Used by the loader and the UI (not the CPU) ----------
 
@@ -59,30 +61,25 @@ public class Memory {
         }
     }
 
-    // Is this address ROM?
-    public boolean isRom(int address) {
-        return isRom[address & 0xFFFF];
-    }
+    public boolean isRom(int address) {return isRom[address & 0xFFFF];}
 
-    // Is this address connected to a device?
-    public boolean isDevice(int address) {
-        return devices[address & 0xFFFF] != null;
-    }
+    public boolean isDevice(int address) {return devices[address & 0xFFFF] != null; }
 
     // Wipe RAM only (ROM keeps its contents)
-    public void clearRam() {
+    public void clearRam(){
         for (int a = 0; a < SIZE; a++) {
-            if (!isRom[a]) {
+            if (!isRom(a)) {
                 data[a] = 0;
             }
         }
     }
 
     // Wipe everything, including ROM (and turn ROM back into RAM)
-    public void clearAll() {
+    public  void clearAll() {
         for (int a = 0; a < SIZE; a++) {
             data[a] = 0;
             isRom[a] = false;
         }
     }
+
 }
